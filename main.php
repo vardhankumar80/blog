@@ -8,7 +8,7 @@
 <body>
 
 <header>
-    <h1>Hi, I'm John Doe</h1>
+    <h1>Hi, I'm Vardhan Kumar</h1>
     <p>Web Developer | AI Enthusiast | Tech Explorer</p>
 </header>
 
