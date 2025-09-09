@@ -33,6 +33,10 @@ body{
   line-height:1.45;
 }
 
+.mobile-menu[hidden] {
+  display: none !important;
+}
+
 /* layout container */
 .container{
   width:calc(100% - 32px);
@@ -109,9 +113,6 @@ body{
 .hero{grid-column:1 / 2}
 .featured{grid-column:2 / 4}
 .full-width{grid-column:1 / -1}
-.mobile-menu[hidden] {
-  display: none !important;
-}
 
 /* hero content */
 .hero h1{margin:0;font-size:28px}
