@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vardhan Kumar — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">V</div>
+        <div class="brand-text">
+          <div class="name">Vardhan Kumar Yedoti</div>
+          <div class="role">B.E. Computer Science — ML / NLP Enthusiast</div>
+        </div>
+      </div>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+        <button id="theme-toggle" class="btn-icon" aria-pressed="false" aria-label="Toggle theme">☀️</button>
+      </nav>
+
+      <div class="nav-mobile-controls">
+        <button id="theme-toggle-mobile" class="btn-icon" aria-pressed="false" aria-label="Toggle theme">☀️</button>
+        <button id="menu-toggle" class="btn-icon" aria-expanded="false" aria-label="Open menu">
+          ☰
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu" hidden>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main class="container main-grid">
+    <!-- Hero -->
+    <section class="card hero">
+      <h1>Hi — I’m <span class="accent">Vardhan</span> 👋</h1>
+      <p class="lead">
+        Dedicated and diligent professional aiming to leverage coding skills and machine learning knowledge to contribute to impactful software and AI projects.
+      </p>
+      <div class="hero-cta">
+        <a class="btn primary" href="mailto:vardhankumary80@gmail.com">Email</a>
+        <a class="btn outline" href="https://github.com/your-handle" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn ghost" href="#projects">See projects</a>
+      </div>
+    </section>
+
+    <!-- Featured -->
+    <section class="card featured">
+      <div class="featured-inner">
+        <div>
+          <h2>Featured Project</h2>
+          <h3>Customer Churn Prediction</h3>
+          <p>
+            End-to-end ML pipeline built with Scikit-learn and XGBoost identifying high-risk customers to improve retention strategies.
+          </p>
+          <div class="tags">
+            <span>XGBoost</span><span>RandomForest</span><span>Feature Engineering</span>
+          </div>
+        </div>
+        <div class="project-illustration" aria-hidden="true">
+          <svg viewBox="0 0 100 100" class="illu-svg"><rect x="6" y="6" width="88" height="88" rx="12"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="card full-width">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+        <article class="proj">
+          <h4>Customer Churn Prediction</h4>
+          <p class="meta">Scikit-learn · XGBoost · RandomForest</p>
+          <p>ML pipeline to forecast telecom churn; performed EDA, feature engineering and achieved ~85% accuracy.</p>
+          <a class="link" href="#">View</a>
+        </article>
+
+        <article class="proj">
+          <h4>Travel Booking Website</h4>
+          <p class="meta">HTML · CSS · JS · PHP · SQL</p>
+          <p>Full-stack booking experience with a responsive UI and custom backend to manage availability and bookings.</p>
+          <a class="link" href="#">View</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="card">
+      <h2>Skills</h2>
+      <div class="chips">
+        <span>Python</span><span>C++</span><span>SQL</span><span>JavaScript</span><span>PyTorch</span><span>Scikit-learn</span><span>Keras</span><span>Pandas</span><span>NLP</span>
+      </div>
+    </section>
+
+    <!-- Education + Contact -->
+    <section id="education" class="card">
+      <h2>Education</h2>
+      <div class="edu">
+        <strong>Hindustan Institute of Technology and Science</strong>
+        <div>B.E. in Computer Science and Engineering — Aug 2022 &ndash; Present</div>
+        <div>CGPA: 8.4 / 10</div>
+      </div>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:vardhankumary80@gmail.com">vardhankumary80@gmail.com</a></p>
+      <p>GitHub: <a href="https://github.com/your-handle" target="_blank" rel="noopener">github.com/your-handle</a></p>
+
+      <form id="contact-form" class="contact-form" action="#" onsubmit="return false;">
+        <input required name="name" placeholder="Your name" />
+        <input required name="email" type="email" placeholder="Your email" />
+        <textarea required name="message" rows="4" placeholder="Message"></textarea>
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Send message</button>
+          <button class="btn outline" type="reset">Reset</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© <span id="year"></span> Vardhan Kumar — Built with HTML/CSS/JS</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
