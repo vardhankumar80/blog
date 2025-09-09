@@ -109,6 +109,9 @@ body{
 .hero{grid-column:1 / 2}
 .featured{grid-column:2 / 4}
 .full-width{grid-column:1 / -1}
+.mobile-menu[hidden] {
+  display: none !important;
+}
 
 /* hero content */
 .hero h1{margin:0;font-size:28px}
