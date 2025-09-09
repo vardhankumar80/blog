@@ -34,7 +34,7 @@ body{
 }
 
 .mobile-menu[hidden] {
-  display: none !important;
+  display: none;
 }
 
 /* layout container */
