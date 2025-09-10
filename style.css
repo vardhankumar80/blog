@@ -108,6 +108,25 @@ body{
   border:1px solid rgba(0,0,0,0.03);
   transition:transform .25s ease, box-shadow .25s ease;
 }
+
+/* Base (light mode) */
+#menu-toggle,
+#theme-toggle-mobile {
+  color: var(--text);      /* matches text color */
+  background: var(--card); /* light button background */
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Dark mode override */
+:root.dark #menu-toggle,
+:root.dark #theme-toggle-mobile {
+  color: #f1f5f9;          /* light icon/text */
+  background: #1e293b;     /* dark gray background */
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
 .card:hover{transform:translateY(-6px)}
 
 /* hero spans two cols on wide screens */
