@@ -1,140 +1,538 @@
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Vardhan Kumar — Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Vardhan Kumar — B.E. CSE, ML & Web Dev — Portfolio" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- Fonts & libraries -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+  <style>
+    :root{
+      --bg:#061017;
+      --card:#0f1620;
+      --muted:#9aa6b2;
+      --accent:#6ee7b7;
+      --accent-2:#7c5cff;
+      --glass:rgba(255,255,255,0.04);
+      --glass-2:rgba(255,255,255,0.02);
+      --max-width:1200px;
+      --safe-pad:20px;
+    }
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,var(--bg) 0%, #07141a 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{color:inherit}
+    /* Header */
+    header{position:fixed;left:0;right:0;top:18px;z-index:80;display:flex;justify-content:center;pointer-events:none}
+    .nav{width:calc(100% - 40px);max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;pointer-events:auto;padding:0 20px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#021018;box-shadow:0 8px 30px rgba(124,92,255,0.12)}
+    .brand h1{margin:0;font-size:15px}
+    .menu{display:flex;gap:10px;align-items:center}
+    .menu button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600;font-size: 15px;}
+    .menu button.active{background:linear-gradient(90deg,rgba(110,231,183,0.08),rgba(124,92,255,0.06));border:1px solid rgba(124,92,255,0.14);color:var(--accent-2)}
+    /* Swiper & slides */
+    .swiper{height:100vh}
+    .swiper-slide{display:flex;align-items:center;justify-content:center;padding:calc(60px + var(--safe-pad)) 20px}
+    .card{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:36px;box-shadow:0 12px 48px rgba(2,6,12,0.6);position:relative;overflow:hidden;border:1px solid var(--glass)}
+    /* Hero canvas sits behind content */
+    canvas#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+    /* hero content overlays */
+    .about{position:relative;z-index:2;display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:center}
+    .intro h2{font-size:34px;margin:0}
+    .intro p{color:var(--muted);line-height:1.6;margin-top:12px}
+    .profile{display:flex;flex-direction:column;gap:18px;align-items:center;transition:transform .35s ease}
+    /* avatar with subtle rotating halo */
+    .avatar{width:220px;height:220px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;overflow:hidden;transition:transform .35s ease}
+    .avatar .img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+    .avatar::before{content:'';position:absolute;inset:-6px;border-radius:inherit;background:conic-gradient(from 0deg,var(--accent),var(--accent-2),var(--accent));opacity:0.28;mix-blend-mode:screen;filter:blur(10px);transform-origin:center;animation:haloRotate 6s linear infinite}
+    @keyframes haloRotate{to{transform:rotate(360deg)}}
+    .contact-mini{display:flex;flex-direction:column;gap:8px;text-align:center}
+    /* skills/projects/education layout */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:12px}
+    .skill{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid var(--glass-2)}
+    .skill .title{display:flex;justify-content:space-between;align-items:center}
+    .bar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px;overflow:hidden}
+    .bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:60%}
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:14px}
+    .proj{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;border:1px solid var(--glass-2);display:flex;flex-direction:column;transition:transform .25s ease,box-shadow .25s}
+    .proj:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,12,0.5)}
+    .proj .thumb{height:160px;background-size:cover;background-position:center;flex-shrink:0}
+    .proj .meta{padding:14px}
+    .timeline{display:flex;flex-direction:column;gap:18px;margin-top:8px}
+    .edu{display:flex;gap:18px;align-items:flex-start}
+    .edu .year{min-width:120px;color:var(--muted)}
+    .contact-grid{display:grid;grid-template-columns:1fr 420px;gap:24px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:#e6eef6;width:100%}
+    button.send{padding:12px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;font-weight:700;cursor:pointer}
+    footer{position:fixed;left:0;right:0;bottom:18px;text-align:center;color:var(--muted);font-size:13px;z-index:70}
+    /* small screens */
+    @media (max-width:980px){ .about{grid-template-columns:1fr} .menu{display:none} .avatar{width:180px;height:180px} .card{padding:22px} canvas#heroCanvas{display:block} .contact-grid{grid-template-columns:1fr} }
+    @media (max-width:520px){ header{top:10px} .brand h1{display:none} .intro h2{font-size:24px} .avatar{width:150px;height:150px} }
+    /* prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .avatar::before, .logo, .proj:hover, .menu button.active {animation: none; transition: none}
+      * {scroll-behavior: auto !important}
+    }
+    /* accessible focus */
+    .menu button:focus{outline:2px solid rgba(110,231,183,0.12);outline-offset:3px}
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
+  <header>
+    <div class="nav" role="navigation" aria-label="Main navigation">
       <div class="brand">
-        <div class="logo">V</div>
-        <div class="brand-text">
-          <div class="name">Vardhan Kumar</div>
-          <div class="role">B.E. Computer Science — ML / NLP Enthusiast</div>
+        <div class="logo" aria-hidden="true">VK</div>
+        <div>
+          <h1>Vardhan Kumar</h1>
+          <div class="small" style="color:var(--muted)">B.E. CSE • ML & Web Dev</div>
         </div>
       </div>
 
-      <nav class="nav-desktop" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#education">Education</a>
-        <a href="#contact">Contact</a>
-        <button id="theme-toggle" class="btn-icon" aria-pressed="false" aria-label="Toggle theme">☀️</button>
-      </nav>
-
-      <div class="nav-mobile-controls">
-        <button id="theme-toggle-mobile" class="btn-icon" aria-pressed="false" aria-label="Toggle theme">☀️</button>
-        <button id="menu-toggle" class="btn-icon" aria-expanded="false" aria-label="Open menu">
-          ☰
-        </button>
+      <div class="menu" role="tablist" aria-label="Sections">
+        <button class="nav-btn active" data-slide="0" role="tab" aria-selected="true">About</button>
+        <button class="nav-btn" data-slide="1" role="tab">Skills</button>
+        <button class="nav-btn" data-slide="2" role="tab">Projects</button>
+        <button class="nav-btn" data-slide="3" role="tab">Education</button>
+        <button class="nav-btn" data-slide="4" role="tab">Contact</button>
       </div>
-    </div>
-
-    <div id="mobile-menu" class="mobile-menu" hidden>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
     </div>
   </header>
 
-  <main class="container main-grid">
-    <!-- Hero -->
-    <section class="card hero">
-      <h1>Hi — I’m <span class="accent">Vardhan</span> 👋</h1>
-      <p class="lead">
-        Dedicated and diligent professional aiming to leverage coding skills and machine learning knowledge to contribute to impactful software and AI projects.
-      </p>
-      <div class="hero-cta">
-        <a class="btn primary" href="mailto:kumarvardhan777@gmail.com">Email</a>
-        <a class="btn outline" href="https://github.com/vardhankumar80/ml_projects" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn ghost" href="#projects">See projects</a>
-      </div>
-    </section>
+  <!-- slider -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
 
-    <!-- Featured -->
-    <section class="card featured">
-      <div class="featured-inner">
-        <div>
-          <h2>Featured Project</h2>
-          <h3>Customer Churn Prediction</h3>
-          <p>
-            End-to-end ML pipeline built with Scikit-learn and XGBoost identifying high-risk customers to improve retention strategies.
-          </p>
-          <div class="tags">
-            <span>XGBoost</span><span>RandomForest</span><span>Feature Engineering</span>
+      <!-- ABOUT / HERO -->
+      <section class="swiper-slide" aria-label="About">
+        <div class="card" role="article">
+          <!-- Canvas background (particles + gradient) -->
+          <canvas id="heroCanvas" aria-hidden="true"></canvas>
+
+          <!-- content that overlays canvas -->
+          <div class="about" id="heroContent">
+            <div class="intro">
+              <h2>Hi — I'm <span id="nameHighlight">Vardhan</span>.</h2>
+              <p>Dedicated and diligent professional aiming to leverage coding skills and machine learning knowledge to contribute to impactful software projects. I enjoy building production-ready ML pipelines and intuitive front-end experiences.</p>
+              <p class="small">Technologies: Python · C++ · JavaScript · SQL · Scikit-learn · PyTorch · Keras · NLP · EDA · HTML/CSS</p>
+              <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap">
+                <a href="#projects" class="small" style="text-decoration:none;color:var(--accent-2);font-weight:700">View projects →</a>
+                <a href="#contact" class="small" style="text-decoration:none;color:var(--muted)">Download resume</a>
+              </div>
+            </div>
+
+            <div class="profile" id="profileBlock">
+              <!-- Replace placeholder with your photo: use an <img> with class .img and path like images/me.jpg -->
+              <div class="avatar" id="avatar">
+                <!-- Example: <img src="images/me.jpg" alt="Vardhan Kumar" class="img" /> -->
+                <div style="padding:12px;text-align:center;color:var(--muted)">Your Photo</div>
+              </div>
+
+              <div class="contact-mini" aria-hidden="false">
+                <div style="font-weight:700">vardhankumary80@gmail.com</div>
+                <div class="small">Github: <a href="#" style="color:var(--accent-2);font-weight:700">/your-github</a></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="project-illustration" aria-hidden="true">
-          <svg viewBox="0 0 100 100" class="illu-svg"><rect x="6" y="6" width="88" height="88" rx="12"/></svg>
+      </section>
+
+      <!-- SKILLS -->
+      <section class="swiper-slide" aria-label="Skills">
+        <div class="card">
+          <h3>Skills</h3>
+          <p class="small" style="margin-top:6px">Languages, frameworks, tools — animated proficiency bars.</p>
+
+          <div class="skills-grid" style="margin-top:14px">
+            <div class="skill" aria-label="Machine Learning">
+              <div class="title"><div style="font-weight:700">Machine Learning</div><div class="small">Advanced</div></div>
+              <div class="bar"><span style="width:90%"></span></div>
+              <div class="small" style="margin-top:8px">Scikit-learn · PyTorch · Keras · XGBoost</div>
+            </div>
+
+            <div class="skill" aria-label="Web Development">
+              <div class="title"><div style="font-weight:700">Web Development</div><div class="small">Intermediate</div></div>
+              <div class="bar"><span style="width:80%"></span></div>
+              <div class="small" style="margin-top:8px">HTML · CSS · JavaScript · PHP · SQL</div>
+            </div>
+
+            <div class="skill" aria-label="Data Analysis">
+              <div class="title"><div style="font-weight:700">Data Analysis</div><div class="small">Advanced</div></div>
+              <div class="bar"><span style="width:85%"></span></div>
+              <div class="small" style="margin-top:8px">Pandas · Matplotlib · PowerBI · EDA</div>
+            </div>
+
+            <div class="skill" aria-label="C++ & Algorithms">
+              <div class="title"><div style="font-weight:700">C++ & Algorithms</div><div class="small">Intermediate</div></div>
+              <div class="bar"><span style="width:70%"></span></div>
+              <div class="small" style="margin-top:8px">DSA · Data Structures</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Projects -->
-    <section id="projects" class="card full-width">
-      <h2>Projects</h2>
-      <div class="projects-grid">
-        <article class="proj">
-          <h4>Customer Churn Prediction</h4>
-          <p class="meta">Scikit-learn · XGBoost · RandomForest</p>
-          <p>ML pipeline to forecast telecom churn; performed EDA, feature engineering and achieved ~85% accuracy.</p>
-          <a class="https://github.com/vardhankumar80/ml_projects" href="#">View</a>
-        </article>
+      <!-- PROJECTS -->
+      <section class="swiper-slide" id="projects" aria-label="Projects">
+        <div class="card">
+          <h3>Projects</h3>
+         
 
-        <article class="proj">
-          <h4>Travel Booking Website</h4>
-          <p class="meta">HTML · CSS · JS · PHP · SQL</p>
-          <p>Full-stack booking experience with a responsive UI and custom backend to manage availability and bookings.</p>
-          <a class="link" href="#">View</a>
-        </article>
-      </div>
-    </section>
+          <div class="projects">
+            <article class="proj" aria-labelledby="proj1title" tabindex="0">
+              <div class="thumb" style="background-image:url('images/customer_churn.webp')" role="img" aria-label="Customer Churn Prediction screenshot"></div>
+              <div class="meta">
+                <h4 id="proj1title">Customer Churn Prediction</h4>
+                <p class="small">Scikit-learn · Python · XGBoost. Pipeline achieving ~85% with feature engineering and EDA.</p>
+              </div>
+            </article>
 
-    <!-- Skills -->
-    <section id="skills" class="card">
-      <h2>Skills</h2>
-      <div class="chips">
-        <span>Python</span><span>C++</span><span>SQL</span><span>JavaScript</span><span>PyTorch</span><span>Scikit-learn</span><span>Keras</span><span>Pandas</span><span>NLP</span>
-      </div>
-    </section>
+            <article class="proj" aria-labelledby="proj2title" tabindex="0">
+              <div class="thumb" style="background-image:url('images/travel_booking.jpg')" role="img" aria-label="Travel booking website screenshot"></div>
+              <div class="meta">
+                <h4 id="proj2title">Travel Booking Website</h4>
+                <p class="small">Full-stack: HTML · CSS · JS · PHP · SQL. Responsive booking UI with backend for availability and bookings.</p>
+              </div>
+            </article>
 
-    <!-- Education + Contact -->
-    <section id="education" class="card">
-      <h2>Education</h2>
-      <div class="edu">
-        <strong>Hindustan Institute of Technology and Science</strong>
-        <div>B.E. in Computer Science and Engineering — Aug 2022 &ndash; Present</div>
-        <div>CGPA: 8.4 / 10</div>
-      </div>
-    </section>
-
-    <section id="contact" class="card">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:kumarvardhan777@gmail.com">kumarvardhan777@gmail.com</a></p>
-      <p>GitHub: <a href="https://github.com/vardhankumar80" target="_blank" rel="noopener">github.com/vardhankumar80</a></p>
-
-      <form id="contact-form" class="contact-form" action="#" onsubmit="return false;">
-        <input required name="name" placeholder="Your name" />
-        <input required name="email" type="email" placeholder="Your email" />
-        <textarea required name="message" rows="4" placeholder="Message"></textarea>
-        <div class="form-actions">
-          <button class="btn primary" type="submit">Send message</button>
-          <button class="btn outline" type="reset">Reset</button>
+            <!-- Add more project cards as desired -->
+          </div>
         </div>
-      </form>
-    </section>
-  </main>
+      </section>
 
-  <footer class="site-footer">
-    <div class="container">© <span id="year"></span> All Rights are Reserved - Vardhan Kumar</div>
-  </footer>
+      <!-- EDUCATION -->
+      <section class="swiper-slide" aria-label="Education">
+        <div class="card">
+          <h3>Education & Coursework</h3>
+          <div class="timeline">
+            <div class="edu">
+              <div class="year">Aug 2022 - Present</div>
+              <div>
+                <strong>Hindustan Institute of Technology and Science — B.E. Computer Science</strong>
+                <div class="small">CGPA: 8.4/10</div>
+                <div class="small" style="margin-top:6px">Relevant: OOP · Databases · Machine Learning · OS · Networks · Data Mining · DSA · Image Processing</div>
+              </div>
+            </div>
 
-  <script src="script.js"></script>
+            <div class="edu">
+              <div class="year">Jul 2020 - Jun 2022</div>
+              <div><strong>Sri Nalanda Junior College — Intermediate</strong><div class="small">Mathematics, Physics, Chemistry</div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="small">Awards: Andhra Pradesh district kabaddi selection 2018 · Top 5 Finalist in Innothon 2025</div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="swiper-slide" id="contact" aria-label="Contact">
+        <div class="card">
+          <h3>Contact</h3>
+          <div class="contact-grid" style="margin-top:12px">
+            <form id="contactForm" onsubmit="event.preventDefault(); alert('Demo: replace with a mail endpoint or Formspree/Netlify config.');">
+              <input placeholder="Your name" required />
+              <input placeholder="Email" type="email" required />
+              <input placeholder="Subject" />
+              <textarea placeholder="Message" rows="6"></textarea>
+              <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
+                <button class="send" type="submit">Send Message</button>
+                <div class="small">Or email me: <strong>vardhankumary80@gmail.com</strong></div>
+              </div>
+            </form>
+
+            <div>
+              <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid var(--glass-2)">
+                <h4>Quick Info</h4>
+                <div class="small" style="margin-top:8px">Location: India</div>
+                <div class="small">Resume: <a href="#" style="color:var(--accent-2)">Download</a></div>
+                <div style="height:12px"></div>
+                <h4>Connect</h4>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <a href="#" class="small" style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none">Github</a>
+                  <a href="#" class="small" style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none">LinkedIn</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Navigation UI -->
+    <div class="swiper-button-prev" aria-hidden="true"></div>
+    <div class="swiper-button-next" aria-hidden="true"></div>
+    <div class="swiper-pagination" aria-hidden="true"></div>
+  </div>
+
+  <footer>© 2025 Vardhan Kumar — Built with care</footer>
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+  /* -------------------------
+     Initialize Swiper slider
+     -------------------------*/
+  const swiper = new Swiper('.swiper', {
+    direction: 'horizontal',
+    loop: false,
+    speed: 800,
+    parallax: true,
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    keyboard: { enabled: true },
+  });
+
+  // Nav buttons control
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.slide);
+      swiper.slideTo(idx);
+    });
+  });
+  swiper.on('slideChange', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    const el = document.querySelector('.nav-btn[data-slide="' + swiper.activeIndex + '"]');
+    if (el) el.classList.add('active');
+  });
+
+  /* -------------------------
+     GSAP entrance animations
+     -------------------------*/
+  gsap.registerPlugin(ScrollTrigger);
+  function animateSlideIn(s) {
+    const elems = s.querySelectorAll('h2,h3,h4,p,.proj,.skill,.avatar,.intro');
+    gsap.fromTo(elems, { y: 16, opacity: 0, stagger: 0.04 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.04, ease: 'power3.out' });
+  }
+  // initial animate on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const first = document.querySelectorAll('.swiper-slide')[0];
+    if (first) animateSlideIn(first);
+  });
+  swiper.on('slideChangeTransitionStart', () => {
+    const cur = document.querySelectorAll('.swiper-slide')[swiper.activeIndex];
+    if (cur) animateSlideIn(cur);
+  });
+
+  /* -------------------------
+     Hero canvas: gradient + particles
+     - responsive, optimized
+     -------------------------*/
+  (function heroCanvasModule() {
+    const canvas = document.getElementById('heroCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let DPR = Math.max(1, window.devicePixelRatio || 1);
+    let W = 0, H = 0;
+    let particles = [];
+    let particleCountBase = 52; // base count (scaled by size)
+    let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resize() {
+      DPR = Math.max(1, window.devicePixelRatio || 1);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      initParticles();
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.round(particleCountBase * Math.max(0.5, Math.min(2.0, (W / 800))));
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: (Math.random() * 1.8 + 0.6) * (Math.random() < 0.2 ? 1.6 : 1),
+          dx: (Math.random() * 0.6 - 0.3),
+          dy: (Math.random() * 0.6 - 0.3),
+          alpha: Math.random() * 0.5 + 0.18
+        });
+      }
+    }
+
+    function drawGradient() {
+      // soft centered radial gradient
+      const cx = W / 2, cy = H / 2;
+      const rad = Math.max(W, H) * 0.9;
+      const g = ctx.createRadialGradient(cx, cy, Math.max(30, rad * 0.02), cx, cy, rad);
+      g.addColorStop(0, 'rgba(124,92,255,0.14)');
+      g.addColorStop(0.5, 'rgba(110,231,183,0.05)');
+      g.addColorStop(1, 'rgba(3,6,10,0.0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    function updateAndRender(dt) {
+      // dt in seconds
+      if (!reducedMotion) {
+        for (let p of particles) {
+          p.x += p.dx * (0.3 + Math.sin(dt + p.r) * 0.3);
+          p.y += p.dy * (0.3 + Math.cos(dt + p.r) * 0.3);
+          // wrap edges
+          if (p.x < -20) p.x = W + 20;
+          if (p.x > W + 20) p.x = -20;
+          if (p.y < -20) p.y = H + 20;
+          if (p.y > H + 20) p.y = -20;
+        }
+      }
+      // render
+      drawGradient();
+      // soft blurred particles
+      for (let p of particles) {
+        ctx.beginPath();
+        const rad = p.r;
+        // subtle radial gradient for each particle for a soft glow
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad * 6);
+        g.addColorStop(0, `rgba(110,231,183,${Math.min(0.55, p.alpha)})`);
+        g.addColorStop(0.5, `rgba(124,92,255,${Math.min(0.22, p.alpha * 0.8)})`);
+        g.addColorStop(1, 'rgba(3,6,10,0)');
+        ctx.fillStyle = g;
+        ctx.arc(p.x, p.y, rad * 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    let last = performance.now();
+    function loop(t) {
+      const now = t;
+      const dt = (now - last) / 1000;
+      last = now;
+      ctx.clearRect(0, 0, W, H);
+      updateAndRender(now / 1000);
+      requestAnimationFrame(loop);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    requestAnimationFrame(loop);
+  })();
+
+  /* -------------------------
+     Parallax: mouse + device orientation
+     - avatar and intro move with input
+     -------------------------*/
+  (function parallaxModule(){
+    const root = document.getElementById('heroContent');
+    const avatar = document.getElementById('avatar');
+    const intro = document.querySelector('.intro');
+    if (!root || !avatar || !intro) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = { ax:0, ay:0, ix:0, iy:0 };
+
+    // mouse move for desktop
+    function onMouseMove(e) {
+      const w = window.innerWidth, h = window.innerHeight;
+      const nx = (e.clientX / w - 0.5);
+      const ny = (e.clientY / h - 0.5);
+      // scale down effect depending on viewport width
+      const scale = Math.min(1, w / 1200);
+      const ax = nx * 18 * scale, ay = ny * 14 * scale;
+      const ix = -nx * 10 * scale, iy = -ny * 8 * scale;
+      gsap.to(avatar, { x: ax, y: ay, rotationY: nx * 6, rotationX: -ny * 4, scale:1.02, duration: 0.8, ease: 'power2.out' });
+      gsap.to(intro, { x: ix, y: iy, duration: 0.8, ease: 'power2.out' });
+    }
+
+    // device orientation for mobile - tilt
+    let lastTilt = { beta:0, gamma:0 };
+    function onDeviceOrientation(e) {
+      if (!e) return;
+      // beta: front-back tilt -90 to 90, gamma: left-right -90 to 90
+      const beta = e.beta || 0;
+      const gamma = e.gamma || 0;
+      // damp and map to small range
+      const nx = Math.max(-30, Math.min(30, gamma)) / 30; // -1..1
+      const ny = Math.max(-30, Math.min(30, beta - 30)) / 30; // center a bit
+      const ax = nx * 12, ay = ny * 10;
+      const ix = -nx * 6, iy = -ny * 5;
+      gsap.to(avatar, { x: ax, y: ay, rotationY: nx * 6, rotationX: -ny * 5, scale:1.01, duration: 0.6, ease: 'power2.out' });
+      gsap.to(intro, { x: ix, y: iy, duration: 0.6, ease: 'power2.out' });
+      lastTilt = { beta, gamma };
+    }
+
+    // attach events with respects to reduced-motion
+    if (!reduceMotion) {
+      // use pointermove for better performance on some browsers
+      root.addEventListener('pointermove', onMouseMove, { passive: true });
+      // device orientation fallback
+      if (window.DeviceOrientationEvent) {
+        // some browsers require permission to access gyro (iOS)
+        function enableDeviceOrientation() {
+          // For iOS 13+ permission API
+          if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission().then(permissionState => {
+              if (permissionState === 'granted') {
+                window.addEventListener('deviceorientation', onDeviceOrientation);
+              }
+            }).catch(()=>{/* ignore */});
+          } else {
+            window.addEventListener('deviceorientation', onDeviceOrientation);
+          }
+        }
+        // try to enable on user interaction (to not trigger permission prompt unexpectedly)
+        window.addEventListener('click', enableDeviceOrientation, { once: true });
+        window.addEventListener('touchstart', enableDeviceOrientation, { once: true });
+      }
+      // reset on leave
+      root.addEventListener('pointerleave', ()=> {
+        gsap.to([avatar, intro], { x: 0, y: 0, rotationX:0, rotationY:0, duration: 0.9, ease: 'power3.out' });
+      });
+    }
+  })();
+
+  /* -------------------------
+     Project hover tilt (desktop)
+     -------------------------*/
+  (function projectTilt() {
+    document.querySelectorAll('.proj').forEach(card => {
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(card, { rotationY: px * 10, rotationX: -py * 6, scale: 1.015, transformPerspective: 900, duration: 0.45, ease: 'power2.out' });
+      });
+      card.addEventListener('pointerleave', () => {
+        gsap.to(card, { rotationY: 0, rotationX: 0, scale: 1, duration: 0.6, ease: 'power3.out' });
+      });
+    });
+  })();
+
+  /* -------------------------
+     Skill bars animate on enter
+     -------------------------*/
+  (function skillBars() {
+    document.querySelectorAll('.skill').forEach(s => {
+      const span = s.querySelector('.bar > span');
+      const toWidth = span.style.width || '70%';
+      gsap.set(span, { width: '0%' });
+      ScrollTrigger.create({
+        trigger: s,
+        start: 'top 80%',
+        onEnter: () => gsap.to(span, { width: toWidth, duration: 1.1, ease: 'power3.out' }),
+      });
+    });
+  })();
+
+  /* -------------------------
+     Performance / small UX helpers
+     -------------------------*/
+  // small accessibility tweak: stop heavy animations if prefers-reduced-motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('canvas, .avatar::before').forEach(n => { /* canvas is already respecting reduced motion internally */ });
+  }
+
+  // helpful console note
+  console.log('Portfolio loaded — replace images/project-*.jpg and avatar image as needed. Update social links & resume.');
+  </script>
 </body>
 </html>
