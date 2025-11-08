@@ -32,10 +32,11 @@
     header{position:fixed;left:0;right:0;top:18px;z-index:80;display:flex;justify-content:center;pointer-events:none}
     .nav{width:calc(100% - 40px);max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;pointer-events:auto;padding:0 20px}
     .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:46px;height:46px}
     .logo img.logo-img{width:100%;height:100%;border-radius:12px;object-fit:contain;}
     .brand h1{margin:0;font-size:15px}
     .menu{display:flex;gap:10px;align-items:center}
-    .menu button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600;font-size: 15px;}
+    .menu button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600;font-size: 15px}
     .menu button.active{background:linear-gradient(90deg,rgba(110,231,183,0.08),rgba(124,92,255,0.06));border:1px solid rgba(124,92,255,0.14);color:var(--accent-2)}
     /* Swiper & slides */
     .swiper{height:100vh}
@@ -75,12 +76,12 @@
     button.send{padding:12px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;font-weight:700;cursor:pointer}
     footer{position:fixed;left:0;right:0;bottom:18px;text-align:center;color:var(--muted);font-size:13px;z-index:70}
     /* small screens */
-    @media (max-width: 768px) {.proj .thumb {height: 150px;}}
+    @media (max-width: 768px) {.proj .thumb {height: 150px;}.logo{width:40px;height:40px}}
     @media (max-width: 600px) {.projects {grid-template-columns: 1fr;gap: 12px;}.proj .thumb {height: 120px;}.proj .meta {padding:10px;}.proj h4 {font-size: 0.95rem;}.proj p.small {
     font-size: 0.8rem;}.card h3{font-size:1.5rem;margin-top:20px;}}
     @media (max-width: 480px) {.projects {grid-template-columns: 1fr;}.proj .thumb {height: 120px;}}
     @media (max-width:980px){ .about{grid-template-columns:1fr} .menu{display:none} .avatar{width:180px;height:180px} .card{padding:22px} canvas#heroCanvas{display:block} .contact-grid{grid-template-columns:1fr} }
-    @media (max-width:520px){ header{top:10px} .brand h1{display:none} .intro h2{font-size:24px} .avatar{width:150px;height:150px} }
+    @media (max-width:520px){ header{top:10px} .brand h1{display:none} .intro h2{font-size:24px} .avatar{width:150px;height:150px}.logo{width:36px;height:36px}}
     /* prefers-reduced-motion */
     @media (prefers-reduced-motion: reduce) {
       .avatar::before, .logo, .proj:hover, .menu button.active {animation: none; transition: none}
