@@ -55,6 +55,12 @@
     .avatar::before{content:'';position:absolute;inset:-6px;border-radius:inherit;background:conic-gradient(from 0deg,var(--accent),var(--accent-2),var(--accent));opacity:0.28;mix-blend-mode:screen;filter:blur(10px);transform-origin:center;animation:haloRotate 6s linear infinite}
     @keyframes haloRotate{to{transform:rotate(360deg)}}
     .contact-mini{display:flex;flex-direction:column;gap:8px;text-align:center}
+    /* Fullscreen overlay */
+    #startupAnimation{position:fixed;inset:0;background:#061017;display:flex;justify-content:center;align-items:center;z-index:9999}
+    .logoAnim{width:180px;opacity:0;transform:scale(0.8) rotate(0deg);display:block;user-select:none;filter:drop-shadow(0 0 20px #6ee7b7) drop-shadow(0 0 25px #7c5cff)}
+    @media(max-width:1200px){.logoAnim{width:150px}}
+    @media(max-width:768px){.logoAnim{width:120px}}
+    @media(max-width:480px){.logoAnim{width:90px}}
     /* skills/projects/education layout */
     .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:12px}
     .skill{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid var(--glass-2)}
@@ -93,6 +99,10 @@
   </style>
 </head>
 <body>
+  <div id="startupAnimation">
+    <img src="images/logo.png" alt="Vardhan Kumar Logo" class="logoAnim" />
+  </div>
+  
   <header>
     <div class="nav" role="navigation" aria-label="Main navigation">
       <div class="brand">
@@ -299,6 +309,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   <script>
+    
+  document.addEventListener('DOMContentLoaded', () => {
+    const startup = document.getElementById('startupAnimation');
+    const logo = document.querySelector('.logoAnim');
+
+    gsap.timeline()
+      .to(logo, {opacity:1, scale:1.3, rotation:20, duration:0.8, ease:"power2.out"})
+      .to(logo, {scale:1, rotation:0, duration:0.5, ease:"power2.inOut"})
+      .to(startup, {opacity:0, duration:0.5, onComplete:()=>startup.style.display="none"});
+  });
+    
   /* -------------------------
      Initialize Swiper slider
      -------------------------*/
