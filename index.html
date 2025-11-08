@@ -32,7 +32,7 @@
     header{position:fixed;left:0;right:0;top:18px;z-index:80;display:flex;justify-content:center;pointer-events:none}
     .nav{width:calc(100% - 40px);max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;pointer-events:auto;padding:0 20px}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#021018;box-shadow:0 8px 30px rgba(124,92,255,0.12)}
+    .logo img .logo-img{width:46px;height:46px;border-radius:12px;object-fit:contain;display:flex;align-items:center;justify-content:center;}
     .brand h1{margin:0;font-size:15px}
     .menu{display:flex;gap:10px;align-items:center}
     .menu button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600;font-size: 15px;}
@@ -94,10 +94,12 @@
   <header>
     <div class="nav" role="navigation" aria-label="Main navigation">
       <div class="brand">
-        <div class="logo" aria-hidden="true">VK</div>
+        <div class="logo" aria-hidden="true">
+          <img src="images/logo.png" alt="Vardhan Kumar Logo" class="logo-img" />
+        </div>
         <div>
           <h1>Vardhan Kumar</h1>
-          <div class="small" style="color:var(--muted)">B.E. CSE • ML & Web Dev</div>
+          <div class="small" style="color:var(--muted)">B.E. CSE • ML & Data Science</div>
         </div>
       </div>
 
@@ -189,8 +191,8 @@
 
           <div class="projects">
             <div class="projects">
-            <article class="proj" aria-labelledby="proj1title" tabindex="0">
-              <div class="thumb" style="background-image:url('images/career_craft.webp')" href="https://github.com/vardhankumar80/career_craft" role="img" aria-label="Career Craft screenshot"></div>
+            <article class="proj" href="https://github.com/vardhankumar80/career_craft" aria-labelledby="proj1title" tabindex="0">
+              <div class="thumb" style="background-image:url('images/career_craft.webp')" role="img" aria-label="Career Craft screenshot"></div>
               <div class="meta">
                 <h4 id="proj1title">Career Craft</h4>
                 <p class="small">React · Express · React.js · JWT-based authentication. Developed a career guidance platform enabling users to track skills, explore career paths, and visualize progress via interactive dashboards.</p>
