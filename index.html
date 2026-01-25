@@ -1,580 +1,379 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Vardhan Kumar — Portfolio</title>
-  <meta name="description" content="Vardhan Kumar — B.E. CSE, ML & Web Dev — Portfolio" />
-  <meta name="color-scheme" content="dark" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vardhan Kumar | Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #F5F5F7;          
+            --card: #FFFFFF;        
+            --text: #1D1D1F;        
+            --subtext: #86868B;     
+            --accent: #0071E3;      
+            --border: rgba(0,0,0,0.06);
+            --radius: 24px;         
+        }
 
-  <!-- Fonts & libraries -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
 
-  <style>
-    :root{
-      --bg:#061017;
-      --card:#0f1620;
-      --muted:#9aa6b2;
-      --accent:#6ee7b7;
-      --accent-2:#7c5cff;
-      --glass:rgba(255,255,255,0.04);
-      --glass-2:rgba(255,255,255,0.02);
-      --max-width:1200px;
-      --safe-pad:20px;
-    }
-    /* Reset & base */
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,var(--bg) 0%, #07141a 100%);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-    a{color:inherit}
-    /* Header */
-    header{position:fixed;left:0;right:0;top:18px;z-index:80;display:flex;justify-content:center;pointer-events:none}
-    .nav{width:calc(100% - 40px);max-width:var(--max-width);display:flex;align-items:center;justify-content:space-between;pointer-events:auto;padding:0 20px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:46px;height:46px}
-    .logo img.logo-img{width:100%;height:100%;border-radius:12px;object-fit:contain;}
-    .brand h1{margin:0;font-size:15px}
-    .menu{display:flex;gap:10px;align-items:center}
-    .menu button{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600;font-size: 15px}
-    .menu button.active{background:linear-gradient(90deg,rgba(110,231,183,0.08),rgba(124,92,255,0.06));border:1px solid rgba(124,92,255,0.14);color:var(--accent-2)}
-    /* Swiper & slides */
-    .swiper{height:100vh}
-    .swiper-slide{display:flex;align-items:center;justify-content:center;padding:calc(60px + var(--safe-pad)) 20px}
-    .card{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:36px;box-shadow:0 12px 48px rgba(2,6,12,0.6);position:relative;overflow:hidden;border:1px solid var(--glass)}
-    /* Hero canvas sits behind content */
-    canvas#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
-    /* hero content overlays */
-    .about{position:relative;z-index:2;display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:center}
-    .intro h2{font-size:34px;margin:0}
-    .intro p{color:var(--muted);line-height:1.6;margin-top:12px}
-    .profile{display:flex;flex-direction:column;gap:18px;align-items:center;transition:transform .35s ease}
-    /* avatar with subtle rotating halo */
-    .avatar{width:220px;height:220px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;overflow:hidden;transition:transform .35s ease}
-    .avatar .img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
-    .avatar::before{content:'';position:absolute;inset:-6px;border-radius:inherit;background:conic-gradient(from 0deg,var(--accent),var(--accent-2),var(--accent));opacity:0.28;mix-blend-mode:screen;filter:blur(10px);transform-origin:center;animation:haloRotate 6s linear infinite}
-    @keyframes haloRotate{to{transform:rotate(360deg)}}
-    .contact-mini{display:flex;flex-direction:column;gap:8px;text-align:center}
-    /* Fullscreen overlay */
-    #startupAnimation{position:fixed;inset:0;background:#061017;display:flex;justify-content:center;align-items:center;z-index:9999}
-    .logoAnim{width:180px;opacity:0;transform:scale(0.8) rotate(0deg);display:block;user-select:none;filter:drop-shadow(0 0 20px #6ee7b7) drop-shadow(0 0 25px #7c5cff)}
-    @media(max-width:1200px){.logoAnim{width:150px}}
-    @media(max-width:768px){.logoAnim{width:120px}}
-    @media(max-width:480px){.logoAnim{width:90px}}
-    /* skills/projects/education layout */
-    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:12px}
-    .skill{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:12px;border:1px solid var(--glass-2)}
-    .skill .title{display:flex;justify-content:space-between;align-items:center}
-    .bar{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;margin-top:8px;overflow:hidden}
-    .bar>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:60%}
-    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:20px}
-    .proj{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;border:1px solid var(--glass-2);transition:transform .25s ease,box-shadow .25s;display:flex;flex-direction:column;}
-    .proj:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,12,0.5)}
-    .proj .thumb{height:160px;background-size:cover;background-position:center;flex-shrink:0}
-    .proj .meta{padding:16px}
-    .proj a {display: block;width:100%;height:100%;text-decoration:none;color:inherit}
-    .proj h4{margin:0 0 8px 0;font-size:1.2rem;color:#e6eef6;}
-    .proj p.small{font-size:o.9rem;line-height:1.4;color:#aab8c7}
-    .timeline{display:flex;flex-direction:column;gap:18px;margin-top:8px}
-    .edu{display:flex;gap:18px;align-items:flex-start}
-    .edu .year{min-width:120px;color:var(--muted)}
-    .contact-grid{display:grid;grid-template-columns:1fr 420px;gap:24px}
-    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:#e6eef6;width:100%}
-    button.send{padding:12px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021018;font-weight:700;cursor:pointer}
-    footer{position:fixed;left:0;right:0;bottom:18px;text-align:center;color:var(--muted);font-size:13px;z-index:70}
-    /* small screens */
-    @media (max-width: 768px) {.proj .thumb {height: 150px;}.logo{width:40px;height:40px}}
-    @media (max-width: 600px) {.projects {grid-template-columns: 1fr;gap: 12px;}.proj .thumb {height: 120px;}.proj .meta {padding:10px;}.proj h4 {font-size: 0.95rem;}.proj p.small {
-    font-size: 0.8rem;}.card h3{font-size:1.5rem;margin-top:20px;}}
-    @media (max-width: 480px) {.projects {grid-template-columns: 1fr;}.proj .thumb {height: 120px;}}
-    @media (max-width:980px){ .about{grid-template-columns:1fr} .menu{display:none} .avatar{width:180px;height:180px} .card{padding:22px} canvas#heroCanvas{display:block} .contact-grid{grid-template-columns:1fr} }
-    @media (max-width:520px){ header{top:10px} .brand h1{display:none} .intro h2{font-size:24px} .avatar{width:150px;height:150px}.logo{width:36px;height:36px}}
-    /* prefers-reduced-motion */
-    @media (prefers-reduced-motion: reduce) {
-      .avatar::before, .logo, .proj:hover, .menu button.active {animation: none; transition: none}
-      * {scroll-behavior: auto !important}
-    }
-    /* accessible focus */
-    .menu button:focus{outline:2px solid rgba(110,231,183,0.12);outline-offset:3px}
-  </style>
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; border: none; outline: none; }
+
+        /* CURSOR */
+        .cursor {
+            position: fixed; top: 0; left: 0; width: 20px; height: 20px;
+            background: var(--text); border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s, width 0.3s, height 0.3s;
+            mix-blend-mode: difference;
+        }
+        .cursor.hovered { width: 50px; height: 50px; background: white; opacity: 0.9; }
+
+        /* UTILS */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 5vw; }
+        
+        /* HEADER / NAV */
+        nav {
+            padding: 30px 0; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: 'Syne'; font-weight: 800; font-size: 1.5rem; }
+        
+        .btn-pill {
+            padding: 12px 28px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.9rem; font-weight: 600;
+            transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: inline-block;
+        }
+        .btn-pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* HERO SECTION */
+        .hero { padding: 80px 0 100px; }
+        
+        .headline-row {
+            display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+            font-family: 'Syne'; font-weight: 800; 
+            font-size: clamp(3.5rem, 8vw, 6.5rem); /* Massive Text */
+            line-height: 1.1; color: var(--text);
+        }
+        
+        /* MASSIVE AVATAR STYLING */
+        .avatar-container {
+            width: 260px; height: 260px; /* MASSIVE SIZE */
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid var(--card); /* Thicker border */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            position: relative; 
+            /* Vertical Alignment Fix */
+            top: 15px;
+            opacity: 0; transform: scale(0);
+            flex-shrink: 0; /* Prevents squishing */
+        }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+
+        .sub-headline {
+            margin-top: 40px; font-size: 1.35rem; color: var(--subtext);
+            max-width: 600px; line-height: 1.6;
+        }
+
+        /* STRUCTURED GRID (SKILLS & EDU) */
+        .bento-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+            margin-bottom: 120px;
+        }
+        .bento-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 40px;
+            border: 1px solid var(--border);
+            transition: 0.3s ease;
+            height: 100%;
+            display: flex; flex-direction: column;
+        }
+        .bento-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
+
+        .card-label {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--subtext); margin-bottom: 24px; font-weight: 600;
+        }
+
+        /* SKILL TAGS */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            padding: 8px 16px; background: var(--bg); border-radius: 8px;
+            font-size: 0.9rem; font-weight: 500; color: var(--text);
+        }
+
+        /* EDUCATION LIST */
+        .edu-row {
+            display: flex; justify-content: space-between; margin-bottom: 16px;
+            padding-bottom: 16px; border-bottom: 1px solid var(--border);
+        }
+        .edu-row:last-child { border: none; padding-bottom: 0; margin-bottom: 0; }
+        .edu-title { font-weight: 600; font-size: 1rem; }
+        .edu-sub { font-size: 0.9rem; color: var(--subtext); margin-top: 4px; }
+        .edu-grade { font-weight: 700; color: var(--accent); }
+
+        /* PROJECTS */
+        .project-section { margin-bottom: 120px; }
+        .project-card {
+            background: var(--card); border-radius: var(--radius);
+            overflow: hidden; margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+        .p-image-box {
+            width: 100%; height: 500px; overflow: hidden; background: #eee;
+        }
+        .p-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .project-card:hover .p-img { transform: scale(1.03); }
+
+        .p-content { padding: 40px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .p-tech { color: var(--accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .p-title { font-family: 'Syne'; font-size: 2rem; margin-bottom: 8px; }
+        .p-desc { color: var(--subtext); max-width: 500px; line-height: 1.6; }
+        
+        /* CLEAN LINKS */
+        .p-link {
+            padding: 10px 24px; background: var(--text); color: white;
+            border-radius: 100px; font-size: 0.9rem; font-weight: 600;
+            transition: 0.3s; display: inline-block; margin-top: 5px;
+        }
+        .p-link:hover { opacity: 0.8; transform: translateY(-2px); }
+
+        /* AWARDS */
+        .awards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .award-item {
+            padding: 30px; background: var(--card); border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        
+        /* FOOTER */
+        footer { padding: 80px 0; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 40px; }
+
+        @media (max-width: 800px) {
+            .bento-grid, .awards-grid, .p-content { grid-template-columns: 1fr; flex-direction: column; gap: 20px; }
+            .p-image-box { height: 250px; }
+            .headline-row { font-size: 3rem; gap: 10px; }
+            
+            /* Mobile Avatar Size */
+            .avatar-container { width: 150px; height: 150px; border-width: 5px; top: 5px; }
+        }
+    </style>
 </head>
 <body>
-  <div id="startupAnimation">
-    <img src="images/logo1.png" alt="Vardhan Kumar Logo" class="logoAnim" />
-  </div>
-  
-  <header>
-    <div class="nav" role="navigation" aria-label="Main navigation">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <img src="images/logo.png" alt="Vardhan Kumar Logo" class="logo-img" />
-        </div>
-        <div>
-          <h1>Vardhan Kumar</h1>
-          <div class="small" style="color:var(--muted)">B.E. CSE • ML & Data Science</div>
-        </div>
-      </div>
 
-      <div class="menu" role="tablist" aria-label="Sections">
-        <button class="nav-btn active" data-slide="0" role="tab" aria-selected="true">About</button>
-        <button class="nav-btn" data-slide="1" role="tab">Skills</button>
-        <button class="nav-btn" data-slide="2" role="tab">Projects</button>
-        <button class="nav-btn" data-slide="3" role="tab">Education</button>
-        <button class="nav-btn" data-slide="4" role="tab">Contact</button>
-      </div>
-    </div>
-  </header>
+    <div class="cursor"></div>
 
-  <!-- slider -->
-  <div class="swiper">
-    <div class="swiper-wrapper">
+    <div class="container">
+        
+        <nav>
+            <div class="logo magnetic">VK.</div>
+            <a href="mailto:vardhankumary80@gmail.com" class="btn-pill magnetic">Hire Me</a>
+        </nav>
 
-      <!-- ABOUT / HERO -->
-      <section class="swiper-slide" aria-label="About">
-        <div class="card" role="article">
-          <!-- Canvas background (particles + gradient) -->
-          <canvas id="heroCanvas" aria-hidden="true"></canvas>
-
-          <!-- content that overlays canvas -->
-          <div class="about" id="heroContent">
-            <div class="intro">
-              <h2>Hi — I'm <span id="nameHighlight">Vardhan</span>.</h2>
-              <p>Dedicated and diligent professional aiming to leverage coding skills and machine learning knowledge to contribute to impactful software projects. I enjoy building production-ready ML pipelines and intuitive front-end experiences.</p>
-              <p class="small">Technologies: Python · C++ · JavaScript · SQL · Scikit-learn · PyTorch · Keras · NLP · EDA · HTML/CSS</p>
-              <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap">
-                <a href="#projects" class="small" style="text-decoration:none;color:var(--accent-2);font-weight:700">View projects →</a>
-              </div>
-            </div>
-
-            <div class="profile" id="profileBlock">
-              <div class="avatar" id="avatar">
-                <img src="images/Vardhan_ai.png" alt="Vardhan Kumar" class="img" />
-                <div style="padding:12px;text-align:center;color:var(--muted)"></div>
-              </div>
-
-              <div class="contact-mini" aria-hidden="false">
-                <div style="font-weight:700">vardhankumary80@gmail.com</div>
-                <div class="small">Github: <a href="https://github.com/vardhankumar80" style="color:var(--accent-2);font-weight:700">/vardhankumar80</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS -->
-      <section class="swiper-slide" aria-label="Skills">
-        <div class="card">
-          <h3>Skills</h3>
-          <p class="small" style="margin-top:6px">Languages, frameworks, tools — animated proficiency bars.</p>
-
-          <div class="skills-grid" style="margin-top:14px">
-            <div class="skill" aria-label="Machine Learning">
-              <div class="title"><div style="font-weight:700">Machine Learning</div><div class="small">Advanced</div></div>
-              <div class="bar"><span style="width:90%"></span></div>
-              <div class="small" style="margin-top:8px">Scikit-learn · PyTorch · Keras · XGBoost</div>
-            </div>
-
-            <div class="skill" aria-label="Web Development">
-              <div class="title"><div style="font-weight:700">Web Development</div><div class="small">Intermediate</div></div>
-              <div class="bar"><span style="width:80%"></span></div>
-              <div class="small" style="margin-top:8px">HTML · CSS · JavaScript · PHP · SQL</div>
-            </div>
-
-            <div class="skill" aria-label="Data Analysis">
-              <div class="title"><div style="font-weight:700">Data Analysis</div><div class="small">Advanced</div></div>
-              <div class="bar"><span style="width:85%"></span></div>
-              <div class="small" style="margin-top:8px">Pandas · Matplotlib · PowerBI · EDA</div>
-            </div>
-
-            <div class="skill" aria-label="C++ & Algorithms">
-              <div class="title"><div style="font-weight:700">C++ & Algorithms</div><div class="small">Intermediate</div></div>
-              <div class="bar"><span style="width:70%"></span></div>
-              <div class="small" style="margin-top:8px">DSA · Data Structures</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROJECTS -->
-      <section class="swiper-slide" id="projects" aria-label="Projects">
-        <div class="card">
-          <h3>Projects</h3>
-
-
-          <div class="projects">
-            <div class="projects">
-            <article class="proj" href="https://github.com/vardhankumar80/career_craft" aria-labelledby="proj1title" tabindex="0">
-              <a href="https://github.com/vardhankumar80/career_craft" target="_blank" rel="noopener noreferrer">
-                <div class="thumb" style="background-image:url('images/career_craft.webp')" role="img" aria-label="Career Craft screenshot"></div>
-                <div class="meta">
-                  <h4 id="proj1title">Career Craft</h4>
-                  <p class="small">React · Express · React.js · JWT-based authentication. Developed a career guidance platform enabling users to track skills, explore career paths, and visualize progress via interactive dashboards.</p>
+        <header class="hero">
+            <div class="headline-row split-text">
+                <span>Hello, I'm</span>
+                <div class="avatar-container">
+                    <img src="images/Vardhan_ai.png" alt="Profile" class="avatar-img">
                 </div>
-              </a>
-            </article>
-              
-            <article class="proj" aria-labelledby="proj2title" tabindex="0">
-              <a href="https://github.com/vardhankumar80/ml_projects" target="_blank" rel="noopener noreferrer">
-                <div class="thumb" style="background-image:url('images/customer_churn.webp')" role="img" aria-label="Customer Churn Prediction screenshot"></div>
-                <div class="meta">
-                  <h4 id="proj2title">Customer Churn Prediction</h4>
-                  <p class="small">Scikit-learn · Python · XGBoost. Pipeline achieving ~85% with feature engineering and EDA.</p>
+                <span>Vardhan.</span>
+            </div>
+            
+            <h1 class="headline-row split-text" style="color: var(--subtext);">
+                <span>ML Engineer</span>
+                <span style="font-size: 0.5em; opacity: 0.5; position: relative; top: -10px;">&</span>
+                <span>Software Developer.</span>
+            </h1>
+
+            <p class="sub-headline fade-in">
+                I build intelligent systems. Combining complex algorithms with clean, structured design to create production-ready applications.
+            </p>
+        </header>
+
+        <section class="bento-grid fade-in">
+            
+            <div class="bento-card magnetic-card">
+                <span class="card-label">Technical Arsenal</span>
+                <div class="tag-container">
+                    <span class="tag">Python</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Data Structures</span>
+                    <span class="tag">Scikit-learn</span>
+                    <span class="tag">XGBoost</span>
+                    <span class="tag">SQL</span>
+                    <span class="tag">React.js</span>
+                    <span class="tag">PHP</span>
+                    <span class="tag">PowerBI</span>
                 </div>
-              </a>
+            </div>
+
+            <div class="bento-card magnetic-card">
+                <span class="card-label">Education</span>
+                
+                <div class="edu-row">
+                    <div>
+                        <div class="edu-title">B.E. Computer Science</div>
+                        <div class="edu-sub">Hindustan Institute of Technology</div>
+                    </div>
+                    <div class="edu-grade"></div>
+                    <div style="font-weight: 500; font-size: 0.9rem;">2026</div>
+                </div>
+
+                <div class="edu-row">
+                    <div>
+                        <div class="edu-title">Intermediate</div>
+                        <div class="edu-sub">Sri Nalanda Junior College</div>
+                    </div>
+                    <div style="font-weight: 500; font-size: 0.9rem;">2022</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-section">
+            <span class="card-label fade-in" style="display:block; margin-bottom: 30px;">Selected Works</span>
+
+            <article class="project-card fade-in">
+                <div class="p-image-box">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" class="p-img" alt="Churn">
+                </div>
+                <div class="p-content">
+                    <div>
+                        <span class="p-tech">Python · XGBoost · Pandas</span>
+                        <h3 class="p-title">Churn Prediction Pipeline</h3>
+                        <p class="p-desc">An end-to-end machine learning solution predicting customer attrition with ~85% accuracy. Features extensive EDA and data balancing.</p>
+                    </div>
+                    <div>
+                        <a href="https://github.com/vardhankumar80/ml_projects" target="_blank" class="p-link magnetic">View Case Study</a>
+                    </div>
+                </div>
             </article>
 
-            <article class="proj" aria-labelledby="proj3title" tabindex="0">
-              <a href="https://github.com/vardhankumar80/Mental-Health-NLP-Analysis" target="_blank" rel="noopener noreferrer">
-                <div class="thumb" style="background-image:url('images/mental_health.jpeg')" role="img" aria-label="Travel booking website screenshot"></div>
-                <div class="meta">
-                  <h4 id="proj3title">Mental Health NLP Analysis</h4>
-                  <p class="small">Full-stack: Python · NLK · Scikit-learn · TextBLob · Gensim. Built a Using Python, NLTK, and topic modelling (LDA), an NLP-based pipeline was created to evaluate sentiment and extract discussion topics from posts about mental health. </p>
+            <article class="project-card fade-in">
+                <div class="p-image-box">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop" class="p-img" alt="Travel">
                 </div>
-              </a>
+                <div class="p-content">
+                    <div>
+                        <span class="p-tech">PHP · SQL · Full Stack</span>
+                        <h3 class="p-title">Career Craft Platform</h3>
+                        <p class="p-desc">Career Craft is a full-stack web application. It features a user-friendly front-end, a robust back-end API, and tools to manage career-related resources and workflows.</div>
+                    <div>
+                        <a href="https://career-craft-1-qk1h.onrender.com" target="_blank" class="p-link magnetic">View Live Site</a>
+                    </div>
+                </div>
             </article>
 
-          </div>
-        </div>
-      </section>
-
-      <!-- EDUCATION -->
-      <section class="swiper-slide" aria-label="Education">
-        <div class="card">
-          <h3>Education & Coursework</h3>
-          <div class="timeline">
-            <div class="edu">
-              <div class="year">Aug 2022 - Present</div>
-              <div>
-                <strong>Hindustan Institute of Technology and Science — B.E. Computer Science</strong>
-                <div class="small">CGPA: 8.4/10</div>
-                <div class="small" style="margin-top:6px">Relevant: OOP · Databases · Machine Learning · OS · Networks · Data Mining · DSA · Image Processing</div>
-              </div>
-            </div>
-
-            <div class="edu">
-              <div class="year">Jul 2020 - Jun 2022</div>
-              <div><strong>Sri Nalanda Junior College — Intermediate</strong><div class="small">Mathematics, Physics, Chemistry</div></div>
-            </div>
-          </div>
-
-          <div style="margin-top:12px" class="small">Awards: Andhra Pradesh district kabaddi selection 2018 · Top 5 Finalist in Innothon 2025</div>
-        </div>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="swiper-slide" id="contact" aria-label="Contact">
-        <div class="card">
-          <h3>Contact</h3>
-          <div class="contact-grid" style="margin-top:12px">
-            <form id="contactForm" onsubmit="event.preventDefault(); alert('Demo: replace with a mail endpoint or Formspree/Netlify config.');">
-              <input placeholder="Your name" required />
-              <input placeholder="Email" type="email" required />
-              <input placeholder="Subject" />
-              <textarea placeholder="Message" rows="6"></textarea>
-              <div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-                <button class="send" type="submit">Send Message</button>
-                <div class="small">Or email me: <strong>kumarvardhan777@gmail.com</strong></div>
-              </div>
-            </form>
-
-            <div>
-              <div style="background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid var(--glass-2)">
-                <h4>Quick Info</h4>
-                <div class="small" style="margin-top:8px">Location: India</div>
-                <div style="height:12px"></div>
-                <h4>Connect</h4>
-                <div style="display:flex;gap:8px;margin-top:8px">
-                  <a href="https://github.com/vardhankumar80" class="small" style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none">Github</a>
-                  <a href="https://www.linkedin.com/in/vardhan-kumar-y-208470248" class="small" style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);text-decoration:none">LinkedIn</a>
+            <article class="project-card fade-in">
+                <div class="p-image-box">
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=2068&auto=format&fit=crop" class="p-img" alt="Travel">
                 </div>
-              </div>
+                <div class="p-content">
+                    <div>
+                        <span class="p-tech">Python · ML · NLTK</span>
+                        <h3 class="p-title">Mental Health NLP Analysis</h3>
+                        <p class="p-desc">Career Craft is a full-stack web application. It features a user-friendly front-end, a robust back-end API, and tools to manage career-related resources and workflows.</div>
+                    <div>
+                        <a href="https://github.com/vardhankumar80/Mental-Health-NLP-Analysis" target="_blank" class="p-link magnetic">View</a>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="fade-in">
+            <span class="card-label" style="display:block; margin-bottom: 30px;">Honors</span>
+            <div class="awards-grid">
+                <div class="award-item magnetic-card">
+                    <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 5px;">Innothon 2025 Finalist</div>
+                    <div style="color: var(--subtext); font-size: 0.9rem;">Tech Solution Top 5 Selection</div>
+                </div>
+                <div class="award-item magnetic-card">
+                    <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 5px;">District Kabaddi Team</div>
+                    <div style="color: var(--subtext); font-size: 0.9rem;">Represented Andhra Pradesh</div>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
+
+        <footer>
+            <h2 style="font-family: 'Syne'; font-size: 2rem; margin-bottom: 20px;">Ready to collaborate?</h2>
+            <a href="mailto:vardhankumary80@gmail.com" class="btn-pill magnetic">Send an Email</a>
+            
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/vardhan-kumar-y-208470248" class="btn-pill magnetic" style="background: transparent; border-color: transparent;">LinkedIn</a>
+                <a href="https://github.com/vardhankumar80" class="btn-pill magnetic" style="background: transparent; border-color: transparent;">Github</a>
+            </div>
+            <div style="margin-top: 40px; color: var(--subtext); font-size: 0.8rem;">© 2025 Vardhan Kumar</div>
+        </footer>
 
     </div>
 
-    <!-- Navigation UI -->
-    <div class="swiper-button-prev" aria-hidden="true"></div>
-    <div class="swiper-button-next" aria-hidden="true"></div>
-    <div class="swiper-pagination" aria-hidden="true"></div>
-  </div>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-  <footer>© 2025 Vardhan Kumar — Built with Care!</footer>
+    <script>
+        // Smooth Scroll
+        const lenis = new Lenis({ duration: 1.2, smooth: true });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
 
-  <!-- Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-  <script>
-    
-  document.addEventListener('DOMContentLoaded', () => {
-    const startup = document.getElementById('startupAnimation');
-    const logo = document.querySelector('.logoAnim');
-
-    gsap.timeline()
-      .to(logo, {opacity:1, scale:1.3, rotation:20, duration:0.8, ease:"power2.out"})
-      .to(logo, {scale:1, rotation:0, duration:0.5, ease:"power2.inOut"})
-      .to(startup, {opacity:0, duration:0.5, onComplete:()=>startup.style.display="none"});
-  });
-    
-  /* -------------------------
-     Initialize Swiper slider
-     -------------------------*/
-  const swiper = new Swiper('.swiper', {
-    direction: 'horizontal',
-    loop: false,
-    speed: 800,
-    parallax: true,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    keyboard: { enabled: true },
-  });
-
-  // Nav buttons control
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = Number(btn.dataset.slide);
-      swiper.slideTo(idx);
-    });
-  });
-  swiper.on('slideChange', () => {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    const el = document.querySelector('.nav-btn[data-slide="' + swiper.activeIndex + '"]');
-    if (el) el.classList.add('active');
-  });
-
-  /* -------------------------
-     GSAP entrance animations
-     -------------------------*/
-  gsap.registerPlugin(ScrollTrigger);
-  function animateSlideIn(s) {
-    const elems = s.querySelectorAll('h2,h3,h4,p,.proj,.skill,.avatar,.intro');
-    gsap.fromTo(elems, { y: 16, opacity: 0, stagger: 0.04 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.04, ease: 'power3.out' });
-  }
-  // initial animate on load
-  document.addEventListener('DOMContentLoaded', () => {
-    const first = document.querySelectorAll('.swiper-slide')[0];
-    if (first) animateSlideIn(first);
-  });
-  swiper.on('slideChangeTransitionStart', () => {
-    const cur = document.querySelectorAll('.swiper-slide')[swiper.activeIndex];
-    if (cur) animateSlideIn(cur);
-  });
-
-  /* -------------------------
-     Hero canvas: gradient + particles
-     - responsive, optimized
-     -------------------------*/
-  (function heroCanvasModule() {
-    const canvas = document.getElementById('heroCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d', { alpha: true });
-    let DPR = Math.max(1, window.devicePixelRatio || 1);
-    let W = 0, H = 0;
-    let particles = [];
-    let particleCountBase = 52; // base count (scaled by size)
-    let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function resize() {
-      DPR = Math.max(1, window.devicePixelRatio || 1);
-      W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
-      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      initParticles();
-    }
-
-    function initParticles() {
-      particles = [];
-      const count = Math.round(particleCountBase * Math.max(0.5, Math.min(2.0, (W / 800))));
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          r: (Math.random() * 1.8 + 0.6) * (Math.random() < 0.2 ? 1.6 : 1),
-          dx: (Math.random() * 0.6 - 0.3),
-          dy: (Math.random() * 0.6 - 0.3),
-          alpha: Math.random() * 0.5 + 0.18
+        // Cursor
+        const cursor = document.querySelector('.cursor');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
         });
-      }
-    }
+        
+        // Hover Magnet Effect
+        document.querySelectorAll('.magnetic, .magnetic-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovered');
+                gsap.to(el, { y: -3, duration: 0.3 });
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovered');
+                gsap.to(el, { y: 0, duration: 0.3 });
+            });
+        });
 
-    function drawGradient() {
-      // soft centered radial gradient
-      const cx = W / 2, cy = H / 2;
-      const rad = Math.max(W, H) * 0.9;
-      const g = ctx.createRadialGradient(cx, cy, Math.max(30, rad * 0.02), cx, cy, rad);
-      g.addColorStop(0, 'rgba(124,92,255,0.14)');
-      g.addColorStop(0.5, 'rgba(110,231,183,0.05)');
-      g.addColorStop(1, 'rgba(3,6,10,0.0)');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
-    }
+        // Animations
+        gsap.registerPlugin(ScrollTrigger);
 
-    function updateAndRender(dt) {
-      // dt in seconds
-      if (!reducedMotion) {
-        for (let p of particles) {
-          p.x += p.dx * (0.3 + Math.sin(dt + p.r) * 0.3);
-          p.y += p.dy * (0.3 + Math.cos(dt + p.r) * 0.3);
-          // wrap edges
-          if (p.x < -20) p.x = W + 20;
-          if (p.x > W + 20) p.x = -20;
-          if (p.y < -20) p.y = H + 20;
-          if (p.y > H + 20) p.y = -20;
-        }
-      }
-      // render
-      drawGradient();
-      // soft blurred particles
-      for (let p of particles) {
-        ctx.beginPath();
-        const rad = p.r;
-        // subtle radial gradient for each particle for a soft glow
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rad * 6);
-        g.addColorStop(0, `rgba(110,231,183,${Math.min(0.55, p.alpha)})`);
-        g.addColorStop(0.5, `rgba(124,92,255,${Math.min(0.22, p.alpha * 0.8)})`);
-        g.addColorStop(1, 'rgba(3,6,10,0)');
-        ctx.fillStyle = g;
-        ctx.arc(p.x, p.y, rad * 6, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
+        // Pop Avatar (BIGGER)
+        gsap.to('.avatar-container', {
+            scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.7)", delay: 0.2
+        });
 
-    let last = performance.now();
-    function loop(t) {
-      const now = t;
-      const dt = (now - last) / 1000;
-      last = now;
-      ctx.clearRect(0, 0, W, H);
-      updateAndRender(now / 1000);
-      requestAnimationFrame(loop);
-    }
-
-    resize();
-    window.addEventListener('resize', resize);
-    requestAnimationFrame(loop);
-  })();
-
-  /* -------------------------
-     Parallax: mouse + device orientation
-     - avatar and intro move with input
-     -------------------------*/
-  (function parallaxModule(){
-    const root = document.getElementById('heroContent');
-    const avatar = document.getElementById('avatar');
-    const intro = document.querySelector('.intro');
-    if (!root || !avatar || !intro) return;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let current = { ax:0, ay:0, ix:0, iy:0 };
-
-    // mouse move for desktop
-    function onMouseMove(e) {
-      const w = window.innerWidth, h = window.innerHeight;
-      const nx = (e.clientX / w - 0.5);
-      const ny = (e.clientY / h - 0.5);
-      // scale down effect depending on viewport width
-      const scale = Math.min(1, w / 1200);
-      const ax = nx * 18 * scale, ay = ny * 14 * scale;
-      const ix = -nx * 10 * scale, iy = -ny * 8 * scale;
-      gsap.to(avatar, { x: ax, y: ay, rotationY: nx * 6, rotationX: -ny * 4, scale:1.02, duration: 0.8, ease: 'power2.out' });
-      gsap.to(intro, { x: ix, y: iy, duration: 0.8, ease: 'power2.out' });
-    }
-
-    // device orientation for mobile - tilt
-    let lastTilt = { beta:0, gamma:0 };
-    function onDeviceOrientation(e) {
-      if (!e) return;
-      // beta: front-back tilt -90 to 90, gamma: left-right -90 to 90
-      const beta = e.beta || 0;
-      const gamma = e.gamma || 0;
-      // damp and map to small range
-      const nx = Math.max(-30, Math.min(30, gamma)) / 30; // -1..1
-      const ny = Math.max(-30, Math.min(30, beta - 30)) / 30; // center a bit
-      const ax = nx * 12, ay = ny * 10;
-      const ix = -nx * 6, iy = -ny * 5;
-      gsap.to(avatar, { x: ax, y: ay, rotationY: nx * 6, rotationX: -ny * 5, scale:1.01, duration: 0.6, ease: 'power2.out' });
-      gsap.to(intro, { x: ix, y: iy, duration: 0.6, ease: 'power2.out' });
-      lastTilt = { beta, gamma };
-    }
-
-    // attach events with respects to reduced-motion
-    if (!reduceMotion) {
-      // use pointermove for better performance on some browsers
-      root.addEventListener('pointermove', onMouseMove, { passive: true });
-      // device orientation fallback
-      if (window.DeviceOrientationEvent) {
-        // some browsers require permission to access gyro (iOS)
-        function enableDeviceOrientation() {
-          // For iOS 13+ permission API
-          if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission().then(permissionState => {
-              if (permissionState === 'granted') {
-                window.addEventListener('deviceorientation', onDeviceOrientation);
-              }
-            }).catch(()=>{/* ignore */});
-          } else {
-            window.addEventListener('deviceorientation', onDeviceOrientation);
-          }
-        }
-        // try to enable on user interaction (to not trigger permission prompt unexpectedly)
-        window.addEventListener('click', enableDeviceOrientation, { once: true });
-        window.addEventListener('touchstart', enableDeviceOrientation, { once: true });
-      }
-      // reset on leave
-      root.addEventListener('pointerleave', ()=> {
-        gsap.to([avatar, intro], { x: 0, y: 0, rotationX:0, rotationY:0, duration: 0.9, ease: 'power3.out' });
-      });
-    }
-  })();
-
-  /* -------------------------
-     Project hover tilt (desktop)
-     -------------------------*/
-  (function projectTilt() {
-    document.querySelectorAll('.proj').forEach(card => {
-      card.addEventListener('pointermove', (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        gsap.to(card, { rotationY: px * 10, rotationX: -py * 6, scale: 1.015, transformPerspective: 900, duration: 0.45, ease: 'power2.out' });
-      });
-      card.addEventListener('pointerleave', () => {
-        gsap.to(card, { rotationY: 0, rotationX: 0, scale: 1, duration: 0.6, ease: 'power3.out' });
-      });
-    });
-  })();
-
-  /* -------------------------
-     Skill bars animate on enter
-     -------------------------*/
-  (function skillBars() {
-    document.querySelectorAll('.skill').forEach(s => {
-      const span = s.querySelector('.bar > span');
-      const toWidth = span.style.width || '70%';
-      gsap.set(span, { width: '0%' });
-      ScrollTrigger.create({
-        trigger: s,
-        start: 'top 80%',
-        onEnter: () => gsap.to(span, { width: toWidth, duration: 1.1, ease: 'power3.out' }),
-      });
-    });
-  })();
-
-  /* -------------------------
-     Performance / small UX helpers
-     -------------------------*/
-  // small accessibility tweak: stop heavy animations if prefers-reduced-motion
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('canvas, .avatar::before').forEach(n => { /* canvas is already respecting reduced motion internally */ });
-  }
-
-  // helpful console note
-  console.log('Portfolio loaded — replace images/project-*.jpg and avatar image as needed. Update social links & resume.');
-  </script>
+        // Reveal Elements
+        const elements = document.querySelectorAll('.fade-in');
+        elements.forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 90%" },
+                y: 30, opacity: 0, duration: 0.8, ease: "power2.out"
+            });
+        });
+    </script>
 </body>
 </html>
